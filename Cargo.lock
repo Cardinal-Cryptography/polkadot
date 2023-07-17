@@ -3869,113 +3869,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67c21572b4949434e4fc1e1978b99c5f77064153c59d998bf13ecd96fb5ecba7"
 
 [[package]]
-name = "kusama-runtime"
-version = "0.9.43"
-dependencies = [
- "bitvec",
- "frame-benchmarking",
- "frame-election-provider-support",
- "frame-executive",
- "frame-remote-externalities",
- "frame-support",
- "frame-system",
- "frame-system-benchmarking",
- "frame-system-rpc-runtime-api",
- "frame-try-runtime",
- "hex-literal 0.4.1",
- "kusama-runtime-constants",
- "log",
- "pallet-authority-discovery",
- "pallet-authorship",
- "pallet-babe",
- "pallet-bags-list",
- "pallet-balances",
- "pallet-bounties",
- "pallet-child-bounties",
- "pallet-collective",
- "pallet-conviction-voting",
- "pallet-democracy",
- "pallet-election-provider-multi-phase",
- "pallet-election-provider-support-benchmarking",
- "pallet-elections-phragmen",
- "pallet-fast-unstake",
- "pallet-grandpa",
- "pallet-identity",
- "pallet-im-online",
- "pallet-indices",
- "pallet-membership",
- "pallet-message-queue",
- "pallet-multisig",
- "pallet-nis",
- "pallet-nomination-pools",
- "pallet-nomination-pools-benchmarking",
- "pallet-nomination-pools-runtime-api",
- "pallet-offences",
- "pallet-offences-benchmarking",
- "pallet-preimage",
- "pallet-proxy",
- "pallet-ranked-collective",
- "pallet-recovery",
- "pallet-referenda",
- "pallet-scheduler",
- "pallet-session",
- "pallet-session-benchmarking",
- "pallet-society",
- "pallet-staking",
- "pallet-staking-runtime-api",
- "pallet-state-trie-migration",
- "pallet-timestamp",
- "pallet-tips",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc-runtime-api",
- "pallet-treasury",
- "pallet-utility",
- "pallet-vesting",
- "pallet-whitelist",
- "pallet-xcm",
- "pallet-xcm-benchmarks",
- "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
- "rustc-hex",
- "scale-info",
- "separator",
- "serde",
- "serde_derive",
- "serde_json",
- "smallvec",
- "sp-api",
- "sp-arithmetic",
- "sp-authority-discovery",
- "sp-block-builder",
- "sp-consensus-babe",
- "sp-consensus-beefy",
- "sp-core",
- "sp-inherents",
- "sp-io",
- "sp-keyring",
- "sp-mmr-primitives",
- "sp-npos-elections",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-staking",
- "sp-std",
- "sp-tracing",
- "sp-transaction-pool",
- "sp-trie",
- "sp-version",
- "static_assertions",
- "substrate-wasm-builder",
- "tiny-keccak",
- "tokio",
- "xcm",
- "xcm-builder",
- "xcm-executor",
-]
-
-[[package]]
 name = "kusama-runtime-constants"
 version = "0.9.43"
 dependencies = [
@@ -6478,9 +6371,9 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
 ]
 
 [[package]]
@@ -6503,9 +6396,9 @@ dependencies = [
  "sp-runtime",
  "sp-std",
  "sp-tracing",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
 ]
 
 [[package]]
@@ -7735,7 +7628,6 @@ name = "polkadot-performance-test"
 version = "0.9.43"
 dependencies = [
  "env_logger 0.9.0",
- "kusama-runtime",
  "log",
  "polkadot-erasure-coding",
  "polkadot-node-core-pvf-prepare-worker",
@@ -7744,6 +7636,7 @@ dependencies = [
  "quote",
  "sc-executor-common",
  "sp-maybe-compressed-blob",
+ "staging-kusama-runtime",
  "thiserror",
 ]
 
@@ -7908,13 +7801,13 @@ dependencies = [
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "static_assertions",
  "substrate-wasm-builder",
  "tiny-keccak",
  "tokio",
- "xcm",
- "xcm-builder",
- "xcm-executor",
 ]
 
 [[package]]
@@ -7964,8 +7857,8 @@ dependencies = [
  "sp-session",
  "sp-staking",
  "sp-std",
+ "staging-xcm",
  "static_assertions",
- "xcm",
 ]
 
 [[package]]
@@ -8041,10 +7934,10 @@ dependencies = [
  "sp-staking",
  "sp-std",
  "sp-tracing",
+ "staging-xcm",
+ "staging-xcm-executor",
  "static_assertions",
  "thousands",
- "xcm",
- "xcm-executor",
 ]
 
 [[package]]
@@ -8061,7 +7954,6 @@ dependencies = [
  "frame-system-rpc-runtime-api",
  "futures",
  "hex-literal 0.4.1",
- "kusama-runtime",
  "kusama-runtime-constants",
  "kvdb",
  "kvdb-rocksdb",
@@ -8164,6 +8056,7 @@ dependencies = [
  "sp-trie",
  "sp-version",
  "sp-weights",
+ "staging-kusama-runtime",
  "substrate-prometheus-endpoint",
  "tempfile",
  "thiserror",
@@ -8327,12 +8220,12 @@ dependencies = [
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "substrate-wasm-builder",
  "test-runtime-constants",
  "tiny-keccak",
- "xcm",
- "xcm-builder",
- "xcm-executor",
 ]
 
 [[package]]
@@ -8393,9 +8286,9 @@ version = "0.9.43"
 dependencies = [
  "clap 4.2.5",
  "generate-bags",
- "kusama-runtime",
  "polkadot-runtime",
  "sp-io",
+ "staging-kusama-runtime",
  "westend-runtime",
 ]
 
@@ -9086,7 +8979,6 @@ version = "0.9.43"
 dependencies = [
  "clap 4.2.5",
  "frame-system",
- "kusama-runtime",
  "kusama-runtime-constants",
  "log",
  "pallet-bags-list-remote-tests",
@@ -9094,6 +8986,7 @@ dependencies = [
  "polkadot-runtime-constants",
  "sp-core",
  "sp-tracing",
+ "staging-kusama-runtime",
  "tokio",
  "westend-runtime",
  "westend-runtime-constants",
@@ -9294,13 +9187,13 @@ dependencies = [
  "sp-transaction-pool",
  "sp-trie",
  "sp-version",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "static_assertions",
  "substrate-wasm-builder",
  "tiny-keccak",
  "tokio",
- "xcm",
- "xcm-builder",
- "xcm-executor",
 ]
 
 [[package]]
@@ -11923,6 +11816,188 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
+name = "staging-kusama-runtime"
+version = "0.9.43"
+dependencies = [
+ "bitvec",
+ "frame-benchmarking",
+ "frame-election-provider-support",
+ "frame-executive",
+ "frame-remote-externalities",
+ "frame-support",
+ "frame-system",
+ "frame-system-benchmarking",
+ "frame-system-rpc-runtime-api",
+ "frame-try-runtime",
+ "hex-literal 0.4.1",
+ "kusama-runtime-constants",
+ "log",
+ "pallet-authority-discovery",
+ "pallet-authorship",
+ "pallet-babe",
+ "pallet-bags-list",
+ "pallet-balances",
+ "pallet-bounties",
+ "pallet-child-bounties",
+ "pallet-collective",
+ "pallet-conviction-voting",
+ "pallet-democracy",
+ "pallet-election-provider-multi-phase",
+ "pallet-election-provider-support-benchmarking",
+ "pallet-elections-phragmen",
+ "pallet-fast-unstake",
+ "pallet-grandpa",
+ "pallet-identity",
+ "pallet-im-online",
+ "pallet-indices",
+ "pallet-membership",
+ "pallet-message-queue",
+ "pallet-multisig",
+ "pallet-nis",
+ "pallet-nomination-pools",
+ "pallet-nomination-pools-benchmarking",
+ "pallet-nomination-pools-runtime-api",
+ "pallet-offences",
+ "pallet-offences-benchmarking",
+ "pallet-preimage",
+ "pallet-proxy",
+ "pallet-ranked-collective",
+ "pallet-recovery",
+ "pallet-referenda",
+ "pallet-scheduler",
+ "pallet-session",
+ "pallet-session-benchmarking",
+ "pallet-society",
+ "pallet-staking",
+ "pallet-staking-runtime-api",
+ "pallet-state-trie-migration",
+ "pallet-timestamp",
+ "pallet-tips",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-treasury",
+ "pallet-utility",
+ "pallet-vesting",
+ "pallet-whitelist",
+ "pallet-xcm",
+ "pallet-xcm-benchmarks",
+ "parity-scale-codec",
+ "polkadot-primitives",
+ "polkadot-runtime-common",
+ "polkadot-runtime-parachains",
+ "rustc-hex",
+ "scale-info",
+ "separator",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "smallvec",
+ "sp-api",
+ "sp-arithmetic",
+ "sp-authority-discovery",
+ "sp-block-builder",
+ "sp-consensus-babe",
+ "sp-consensus-beefy",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-keyring",
+ "sp-mmr-primitives",
+ "sp-npos-elections",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-staking",
+ "sp-std",
+ "sp-tracing",
+ "sp-transaction-pool",
+ "sp-trie",
+ "sp-version",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
+ "static_assertions",
+ "substrate-wasm-builder",
+ "tiny-keccak",
+ "tokio",
+]
+
+[[package]]
+name = "staging-test-parachains"
+version = "0.9.43"
+dependencies = [
+ "parity-scale-codec",
+ "sp-core",
+ "test-parachain-adder",
+ "test-parachain-halt",
+ "tiny-keccak",
+]
+
+[[package]]
+name = "staging-xcm"
+version = "0.9.43"
+dependencies = [
+ "bounded-collections",
+ "derivative",
+ "hex",
+ "hex-literal 0.4.1",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-io",
+ "sp-weights",
+ "xcm-procedural",
+]
+
+[[package]]
+name = "staging-xcm-builder"
+version = "0.9.43"
+dependencies = [
+ "assert_matches",
+ "frame-support",
+ "frame-system",
+ "impl-trait-for-tuples",
+ "log",
+ "pallet-balances",
+ "pallet-transaction-payment",
+ "pallet-xcm",
+ "parity-scale-codec",
+ "polkadot-parachain",
+ "polkadot-runtime-parachains",
+ "polkadot-test-runtime",
+ "primitive-types",
+ "scale-info",
+ "sp-arithmetic",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "sp-weights",
+ "staging-xcm",
+ "staging-xcm-executor",
+]
+
+[[package]]
+name = "staging-xcm-executor"
+version = "0.9.43"
+dependencies = [
+ "environmental",
+ "frame-benchmarking",
+ "frame-support",
+ "impl-trait-for-tuples",
+ "log",
+ "parity-scale-codec",
+ "sp-arithmetic",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+ "sp-weights",
+ "staging-xcm",
+]
+
+[[package]]
 name = "staking-miner"
 version = "0.9.43"
 dependencies = [
@@ -11935,7 +12010,6 @@ dependencies = [
  "frame-system",
  "futures-util",
  "jsonrpsee",
- "kusama-runtime",
  "log",
  "pallet-balances",
  "pallet-election-provider-multi-phase",
@@ -11956,6 +12030,7 @@ dependencies = [
  "sp-npos-elections",
  "sp-runtime",
  "sp-version",
+ "staging-kusama-runtime",
  "sub-tokens",
  "thiserror",
  "tokio",
@@ -12508,17 +12583,6 @@ dependencies = [
  "substrate-test-utils",
  "test-parachain-undying",
  "tokio",
-]
-
-[[package]]
-name = "test-parachains"
-version = "0.9.43"
-dependencies = [
- "parity-scale-codec",
- "sp-core",
- "test-parachain-adder",
- "test-parachain-halt",
- "tiny-keccak",
 ]
 
 [[package]]
@@ -14141,13 +14205,13 @@ dependencies = [
  "sp-tracing",
  "sp-transaction-pool",
  "sp-version",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "substrate-wasm-builder",
  "tiny-keccak",
  "tokio",
  "westend-runtime-constants",
- "xcm",
- "xcm-builder",
- "xcm-executor",
 ]
 
 [[package]]
@@ -14550,70 +14614,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xcm"
-version = "0.9.43"
-dependencies = [
- "bounded-collections",
- "derivative",
- "hex",
- "hex-literal 0.4.1",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "sp-io",
- "sp-weights",
- "xcm-procedural",
-]
-
-[[package]]
-name = "xcm-builder"
-version = "0.9.43"
-dependencies = [
- "assert_matches",
- "frame-support",
- "frame-system",
- "impl-trait-for-tuples",
- "log",
- "pallet-balances",
- "pallet-transaction-payment",
- "pallet-xcm",
- "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-runtime-parachains",
- "polkadot-test-runtime",
- "primitive-types",
- "scale-info",
- "sp-arithmetic",
- "sp-io",
- "sp-runtime",
- "sp-std",
- "sp-weights",
- "xcm",
- "xcm-executor",
-]
-
-[[package]]
-name = "xcm-executor"
-version = "0.9.43"
-dependencies = [
- "environmental",
- "frame-benchmarking",
- "frame-support",
- "impl-trait-for-tuples",
- "log",
- "parity-scale-codec",
- "sp-arithmetic",
- "sp-core",
- "sp-io",
- "sp-runtime",
- "sp-std",
- "sp-weights",
- "xcm",
-]
-
-[[package]]
 name = "xcm-executor-integration-tests"
 version = "0.9.43"
 dependencies = [
@@ -14629,8 +14629,8 @@ dependencies = [
  "sp-runtime",
  "sp-state-machine",
  "sp-tracing",
- "xcm",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-executor",
 ]
 
 [[package]]
@@ -14655,9 +14655,9 @@ dependencies = [
  "polkadot-runtime-parachains",
  "sp-io",
  "sp-std",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
 ]
 
 [[package]]
@@ -14681,9 +14681,9 @@ dependencies = [
  "sp-runtime",
  "sp-std",
  "sp-tracing",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "xcm-simulator",
 ]
 
@@ -14707,9 +14707,9 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "staging-xcm",
+ "staging-xcm-builder",
+ "staging-xcm-executor",
  "xcm-simulator",
 ]
 
