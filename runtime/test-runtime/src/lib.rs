@@ -816,7 +816,7 @@ sp_api::impl_runtime_apis! {
 		}
 
 		fn minimum_backing_votes() -> u32 {
-			parachains_runtime_api_impl::minimum_backing_votes::<Runtime>()
+			runtime_impl::minimum_backing_votes::<Runtime>()
 		}
 
 		fn validator_groups() -> (Vec<Vec<ValidatorIndex>>, GroupRotationInfo<BlockNumber>) {
