@@ -224,6 +224,26 @@ async fn test_startup(virtual_overseer: &mut VirtualOverseer, test_state: &TestS
 		))))
 		.await;
 
+	// Check that subsystem job issues a request for the session index for child.
+	assert_matches!(
+		virtual_overseer.recv().await,
+		AllMessages::RuntimeApi(
+			RuntimeApiMessage::Request(parent, RuntimeApiRequest::SessionIndexForChild(tx))
+		) if parent == test_state.relay_parent => {
+			tx.send(Ok(test_state.signing_context.session_index)).unwrap();
+		}
+	);
+
+	// Check that subsystem job issues a request for the minimum backing votes.
+	assert_matches!(
+		virtual_overseer.recv().await,
+		AllMessages::RuntimeApi(
+			RuntimeApiMessage::Request(parent, RuntimeApiRequest::MinimumBackingVotes(tx))
+		) if parent == test_state.relay_parent => {
+			tx.send(Ok(test_state.minimum_backing_votes)).unwrap();
+		}
+	);
+
 	// Check that subsystem job issues a request for a validator set.
 	assert_matches!(
 		virtual_overseer.recv().await,
@@ -244,16 +264,6 @@ async fn test_startup(virtual_overseer: &mut VirtualOverseer, test_state: &TestS
 		}
 	);
 
-	// Check that subsystem job issues a request for the session index for child.
-	assert_matches!(
-		virtual_overseer.recv().await,
-		AllMessages::RuntimeApi(
-			RuntimeApiMessage::Request(parent, RuntimeApiRequest::SessionIndexForChild(tx))
-		) if parent == test_state.relay_parent => {
-			tx.send(Ok(test_state.signing_context.session_index)).unwrap();
-		}
-	);
-
 	// Check that subsystem job issues a request for the availability cores.
 	assert_matches!(
 		virtual_overseer.recv().await,
@@ -261,16 +271,6 @@ async fn test_startup(virtual_overseer: &mut VirtualOverseer, test_state: &TestS
 			RuntimeApiMessage::Request(parent, RuntimeApiRequest::AvailabilityCores(tx))
 		) if parent == test_state.relay_parent => {
 			tx.send(Ok(test_state.availability_cores.clone())).unwrap();
-		}
-	);
-
-	// Check that subsystem job issues a request for the minimum backing votes.
-	assert_matches!(
-		virtual_overseer.recv().await,
-		AllMessages::RuntimeApi(
-			RuntimeApiMessage::Request(parent, RuntimeApiRequest::MinimumBackingVotes(tx))
-		) if parent == test_state.relay_parent => {
-			tx.send(Ok(test_state.minimum_backing_votes)).unwrap();
 		}
 	);
 }

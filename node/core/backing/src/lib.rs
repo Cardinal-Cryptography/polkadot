@@ -44,8 +44,7 @@ use polkadot_node_subsystem::{
 	Stage, SubsystemError,
 };
 use polkadot_node_subsystem_util::{
-	self as util, request_from_runtime, request_session_index_for_child, request_validator_groups,
-	request_validators, Validator,
+	self as util, request_from_runtime, request_validator_groups, request_validators, Validator,
 };
 use polkadot_primitives::{
 	BackedCandidate, CandidateCommitments, CandidateHash, CandidateReceipt, CollatorId,
@@ -61,6 +60,7 @@ use statement_table::{
 	},
 	Context as TableContextTrait, Table,
 };
+use util::runtime::RuntimeInfo;
 
 mod error;
 
@@ -154,6 +154,7 @@ async fn run<Context>(
 ) -> FatalResult<()> {
 	let (background_validation_tx, mut background_validation_rx) = mpsc::channel(16);
 	let mut jobs = HashMap::new();
+	let mut runtime_info = RuntimeInfo::new(None);
 
 	loop {
 		let res = run_iteration(
@@ -163,6 +164,7 @@ async fn run<Context>(
 			&mut jobs,
 			background_validation_tx.clone(),
 			&mut background_validation_rx,
+			&mut runtime_info,
 		)
 		.await;
 
@@ -183,6 +185,7 @@ async fn run_iteration<Context>(
 	jobs: &mut HashMap<Hash, JobAndSpan<Context>>,
 	background_validation_tx: mpsc::Sender<(Hash, ValidatedCandidateCommand)>,
 	background_validation_rx: &mut mpsc::Receiver<(Hash, ValidatedCandidateCommand)>,
+	runtime_info: &mut RuntimeInfo,
 ) -> Result<(), Error> {
 	loop {
 		futures::select!(
@@ -208,6 +211,7 @@ async fn run_iteration<Context>(
 						&keystore,
 						&background_validation_tx,
 						&metrics,
+						runtime_info
 					).await?,
 					FromOrchestra::Signal(OverseerSignal::BlockFinalized(..)) => {}
 					FromOrchestra::Signal(OverseerSignal::Conclude) => return Ok(()),
@@ -269,6 +273,7 @@ async fn handle_active_leaves_update<Context>(
 	keystore: &KeystorePtr,
 	background_validation_tx: &mpsc::Sender<(Hash, ValidatedCandidateCommand)>,
 	metrics: &Metrics,
+	runtime_info: &mut RuntimeInfo,
 ) -> Result<(), Error> {
 	for deactivated in update.deactivated {
 		jobs.remove(&deactivated);
@@ -303,24 +308,23 @@ async fn handle_active_leaves_update<Context>(
 	let span = PerLeafSpan::new(leaf.span, "backing");
 	let _span = span.child("runtime-apis");
 
-	let (validators, groups, session_index, cores, minimum_backing_votes) = futures::try_join!(
+	let session_index =
+		try_runtime_api!(runtime_info.get_session_index_for_child(ctx.sender(), parent).await);
+	let minimum_backing_votes =
+		runtime_info.get_min_backing_votes(ctx.sender(), session_index, parent).await;
+
+	let (validators, groups, cores) = futures::try_join!(
 		request_validators(parent, ctx.sender()).await,
 		request_validator_groups(parent, ctx.sender()).await,
-		request_session_index_for_child(parent, ctx.sender()).await,
 		request_from_runtime(parent, ctx.sender(), |tx| {
 			RuntimeApiRequest::AvailabilityCores(tx)
 		},)
-		.await,
-		request_from_runtime(parent, ctx.sender(), |tx| {
-			RuntimeApiRequest::MinimumBackingVotes(tx)
-		})
 		.await,
 	)
 	.map_err(Error::JoinMultiple)?;
 
 	let validators: Vec<_> = try_runtime_api!(validators);
 	let (validator_groups, group_rotation_info) = try_runtime_api!(groups);
-	let session_index = try_runtime_api!(session_index);
 	let cores = try_runtime_api!(cores);
 	let minimum_backing_votes = try_runtime_api!(minimum_backing_votes);
 
