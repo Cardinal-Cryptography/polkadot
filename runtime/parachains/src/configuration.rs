@@ -239,6 +239,8 @@ pub struct HostConfiguration<BlockNumber> {
 	/// This value should be greater than [`chain_availability_period`] and
 	/// [`thread_availability_period`].
 	pub minimum_validation_upgrade_delay: BlockNumber,
+	/// The minimum number of valid backing statements required to consider a parachain candidate backable.
+	pub minimum_backing_votes: u32,
 }
 
 impl<BlockNumber: Default + From<u32>> Default for HostConfiguration<BlockNumber> {
@@ -287,6 +289,7 @@ impl<BlockNumber: Default + From<u32>> Default for HostConfiguration<BlockNumber
 			pvf_voting_ttl: 2u32.into(),
 			minimum_validation_upgrade_delay: 2.into(),
 			executor_params: Default::default(),
+			minimum_backing_votes: Default::default(),
 		}
 	}
 }

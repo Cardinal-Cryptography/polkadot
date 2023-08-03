@@ -132,6 +132,9 @@ sp_api::decl_runtime_apis! {
 		/// Get the current validators.
 		fn validators() -> Vec<ValidatorId>;
 
+		/// Get the minimum number of backing votes for a parachain candidate.
+		fn minimum_backing_votes() -> u32;
+
 		/// Returns the validator groups and rotation info localized based on the hypothetical child
 		///  of a block whose state  this is invoked on. Note that `now` in the `GroupRotationInfo`
 		/// should be the successor of the number of the block.

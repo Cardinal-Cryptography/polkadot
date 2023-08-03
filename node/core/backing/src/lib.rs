@@ -303,13 +303,17 @@ async fn handle_active_leaves_update<Context>(
 	let span = PerLeafSpan::new(leaf.span, "backing");
 	let _span = span.child("runtime-apis");
 
-	let (validators, groups, session_index, cores) = futures::try_join!(
+	let (validators, groups, session_index, cores, minimum_backing_votes) = futures::try_join!(
 		request_validators(parent, ctx.sender()).await,
 		request_validator_groups(parent, ctx.sender()).await,
 		request_session_index_for_child(parent, ctx.sender()).await,
 		request_from_runtime(parent, ctx.sender(), |tx| {
 			RuntimeApiRequest::AvailabilityCores(tx)
 		},)
+		.await,
+		request_from_runtime(parent, ctx.sender(), |tx| {
+			RuntimeApiRequest::MinimumBackingVotes(tx)
+		})
 		.await,
 	)
 	.map_err(Error::JoinMultiple)?;
@@ -318,6 +322,7 @@ async fn handle_active_leaves_update<Context>(
 	let (validator_groups, group_rotation_info) = try_runtime_api!(groups);
 	let session_index = try_runtime_api!(session_index);
 	let cores = try_runtime_api!(cores);
+	let minimum_backing_votes = try_runtime_api!(minimum_backing_votes);
 
 	drop(_span);
 	let _span = span.child("validator-construction");
@@ -393,6 +398,7 @@ async fn handle_active_leaves_update<Context>(
 		table_context,
 		background_validation_tx: background_validation_tx.clone(),
 		metrics: metrics.clone(),
+		minimum_backing_votes,
 		_marker: std::marker::PhantomData,
 	};
 
@@ -432,6 +438,7 @@ struct CandidateBackingJob<Context> {
 	table_context: TableContext,
 	background_validation_tx: mpsc::Sender<(Hash, ValidatedCandidateCommand)>,
 	metrics: Metrics,
+	minimum_backing_votes: u32,
 	_marker: std::marker::PhantomData<Context>,
 }
 
@@ -450,13 +457,6 @@ struct AttestingData {
 	from_validator: ValidatorIndex,
 	/// Other backing validators we can try in case `from_validator` failed.
 	backing: Vec<ValidatorIndex>,
-}
-
-/// How many votes we need to consider a candidate backed.
-///
-/// WARNING: This has to be kept in sync with the runtime check in the inclusion module.
-fn minimum_votes(n_validators: usize) -> usize {
-	std::cmp::min(2, n_validators)
 }
 
 #[derive(Default)]
@@ -485,8 +485,8 @@ impl TableContextTrait for TableContext {
 		self.groups.get(group).map_or(false, |g| g.iter().any(|a| a == authority))
 	}
 
-	fn requisite_votes(&self, group: &ParaId) -> usize {
-		self.groups.get(group).map_or(usize::MAX, |g| minimum_votes(g.len()))
+	fn get_group_size(&self, group: &ParaId) -> Option<usize> {
+		self.groups.get(group).map(|g| g.len())
 	}
 }
 
@@ -1023,10 +1023,13 @@ impl<Context> CandidateBackingJob<Context> {
 
 		let summary = self.table.import_statement(&self.table_context, stmt);
 
-		let unbacked_span = if let Some(attested) = summary
-			.as_ref()
-			.and_then(|s| self.table.attested_candidate(&s.candidate, &self.table_context))
-		{
+		let unbacked_span = if let Some(attested) = summary.as_ref().and_then(|s| {
+			self.table.attested_candidate(
+				&s.candidate,
+				&self.table_context,
+				self.minimum_backing_votes,
+			)
+		}) {
 			let candidate_hash = attested.candidate.hash();
 			// `HashSet::insert` returns true if the thing wasn't in there already.
 			if self.backed.insert(candidate_hash) {
@@ -1143,12 +1146,11 @@ impl<Context> CandidateBackingJob<Context> {
 		tx: oneshot::Sender<Vec<BackedCandidate>>,
 	) -> Result<(), Error> {
 		let _timer = self.metrics.time_get_backed_candidates();
-
 		let backed = requested_candidates
 			.into_iter()
 			.filter_map(|hash| {
 				self.table
-					.attested_candidate(&hash, &self.table_context)
+					.attested_candidate(&hash, &self.table_context, self.minimum_backing_votes)
 					.and_then(|attested| table_attested_to_backed(attested, &self.table_context))
 			})
 			.collect();
