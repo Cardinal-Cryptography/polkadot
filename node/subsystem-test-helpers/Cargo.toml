@@ -12,11 +12,11 @@ parking_lot = "0.12.0"
 polkadot-node-subsystem = { path = "../subsystem" }
 polkadot-node-subsystem-util = { path = "../subsystem-util" }
 polkadot-primitives = { path = "../../primitives" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+sp-core = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-keystore = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sc-keystore = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-keyring = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-application-crypto = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 
 [dev-dependencies]
 polkadot-overseer = { path = "../overseer" }

@@ -15,14 +15,14 @@ polkadot-primitives = { path = "../../../primitives" }
 polkadot-node-subsystem-util = { path = "../../subsystem-util" }
 polkadot-overseer = { path = "../../overseer" }
 
-sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+sp-keystore = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 
 [dev-dependencies]
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+sp-core = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-runtime = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sc-keystore = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-keyring = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
 test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
-sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+sp-application-crypto = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 futures-timer = "3.0.2"

@@ -11,13 +11,13 @@ honggfuzz = "0.5.55"
 arbitrary = "1.2.0"
 scale-info = { version = "2.1.2", features = ["derive"] }
 
-frame-system = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-frame-support = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-std = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+frame-system = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+frame-support = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+pallet-balances = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-std = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-core = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-runtime = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-io = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 
 xcm = { path = "../../" }
 xcm-simulator = { path = "../" }

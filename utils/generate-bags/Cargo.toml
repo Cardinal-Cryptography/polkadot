@@ -7,8 +7,8 @@ edition.workspace = true
 [dependencies]
 clap = { version = "4.0.9", features = ["derive"] }
 
-generate-bags = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
-sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+generate-bags = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
+sp-io = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 
 westend-runtime = { path = "../../runtime/westend" }
 kusama-runtime = { path = "../../runtime/kusama" }

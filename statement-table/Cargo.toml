@@ -6,5 +6,5 @@ edition.workspace = true
 
 [dependencies]
 parity-scale-codec = { version = "3.3.0", default-features = false, features = ["derive"] }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.41" }
+sp-core = { git = "https://github.com/Cardinal-Cryptography/substrate", branch = "obrok/aleph-v0.9.41-wasmtime8" }
 primitives = { package = "polkadot-primitives", path = "../primitives" }
